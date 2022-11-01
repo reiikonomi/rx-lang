@@ -6,7 +6,8 @@ import {
     NodeType,
     NumericLiteral,
     Program,
-    Statement
+    Statement,
+    VarDeclaration
 } from "./ast";
 import { Token, TokenType, tokenize } from "./lexer";
 
@@ -51,11 +52,59 @@ export default class Parser {
     }
 
     private parse_statement(): Statement {
-        return this.parse_expression()
+        switch (this.at().type) {
+            case TokenType.val:
+            case TokenType.cval:
+                return this.parse_variable_declaration()
+            default:
+                return this.parse_expression()
+        }
     }
 
     private parse_expression(): Expression {
         return this.parse_additive_expression()
+    }
+
+    // (cval | val) ident;
+    // (cval | val) ident = expression
+    private parse_variable_declaration(): Expression {
+        const isConstant = this.consume().type == TokenType.cval;
+        const identifier = this.expect(
+            TokenType.Identifier,
+            "Expected identifier name following let | const keywords.",
+        ).value;
+
+        if (this.at().type == TokenType.Semicolon) {
+            this.consume(); // expect semicolon
+            if (isConstant) {
+                throw "Must assigne value to constant expression. No value provided.";
+            }
+
+            return {
+                kind: "VarDeclaration",
+                identifier,
+                constant: false,
+            } as VarDeclaration;
+        }
+
+        this.expect(
+            TokenType.Equals,
+            "Expected equals token following identifier in var declaration.",
+        );
+
+        const declaration = {
+            kind: "VarDeclaration",
+            value: this.parse_expression(),
+            identifier,
+            constant: isConstant,
+        } as VarDeclaration;
+
+        this.expect(
+            TokenType.Semicolon,
+            "Variable declaration statment must end with semicolon.",
+        );
+
+        return declaration;
     }
 
     private parse_additive_expression(): Expression {

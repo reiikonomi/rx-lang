@@ -3,7 +3,11 @@
 // ---     Defines the structure of our languages AST      ---
 // -----------------------------------------------------------
 export type NodeType =
+    //Statements
     | "Program"
+
+    //Expressions
+    | "VarDeclaration"
     | "NumericLiteral"
     | "Identifier"
     | "BinaryExpr"
@@ -23,6 +27,14 @@ export interface Statement {
 export interface Program extends Statement {
     kind: "Program",
     body: Statement[]
+}
+
+
+export interface VarDeclaration extends Statement {
+    kind: "VarDeclaration";
+    constant: boolean;
+    identifier: string;
+    value?: Expression;
 }
 
 

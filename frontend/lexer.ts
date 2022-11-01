@@ -10,21 +10,21 @@ export enum TokenType {
     // cval -> constant variable
     cval,
     // gval -> global variable
-    gval,
+    //gval,
     // fval -> function variable
-    fval,
+    //fval,
     // lval -> local variable
     /**
      * Can be accessed only in the inner scope of the current environment with the exception of: NO CHILDREN OF THE ENVIRONMENT CAN ACCESS THIS VARIABLE!!!!
      */
-    lval,
+    //lval,
 
     // loops are now independent functions
     /**
      * forLoop((index in array), {return index + 1})
      * forLoop((i < 10), {print.line(i)})
      */
-    forLoop,
+    //forLoop,
     /**
      * the if else loop is now a function and for each else if there will be a set of parenthesis that take in the condition, the logic and the return value
      * if there are only 2 sets of parenthesis then the function will assume thats its only an if else block, if there are more than 2, then the first will be the if, the last the else and anything in between an else if
@@ -36,7 +36,7 @@ export enum TokenType {
      *              ifElse(condition: user.name, {logic}, user.name)
      *          }, user.something)()
      */
-    ifElse,
+    //ifElse,
     /**     
      *      The first semicolon pair contains the try block logic, the second one contains the catch block logic. If there isn't a set of parenthesis before the catch block then the function assums that
      *      the exception to catch is an error of any type as seen in example 1. 
@@ -60,14 +60,14 @@ export enum TokenType {
      *         })
      * 
      */
-    tryCatch,
+    //tryCatch,
     //functions,
     /**
      *      fun(arg: string, arg1:number, arg3: map, {
      *              
      *          })
      */
-    fun,
+    //fun,
 
     //Grouping * Operators
     BinaryOperator,
@@ -88,13 +88,13 @@ export enum TokenType {
 const KEYWORDS: Record<string, TokenType> = {
     val: TokenType.val,
     cval: TokenType.cval,
-    gval: TokenType.gval,
-    fval: TokenType.fval,
-    lval: TokenType.lval,
-    forLoop: TokenType.forLoop,
-    ifElse: TokenType.ifElse,
-    tryCatch: TokenType.tryCatch,
-    fun: TokenType.fun,
+    // gval: TokenType.gval,
+    // fval: TokenType.fval,
+    // lval: TokenType.lval,
+    // forLoop: TokenType.forLoop,
+    // ifElse: TokenType.ifElse,
+    // tryCatch: TokenType.tryCatch,
+    // fun: TokenType.fun,
 }
 
 /**

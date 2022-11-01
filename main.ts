@@ -12,12 +12,12 @@ function repl() {
     const environment = new Environment();
 
     // Create default global environment variables
-    environment.declareVariable("x", MAKE_NUMBER(420))
-    environment.declareVariable("y", MAKE_NUMBER(69))
-    environment.declareVariable("warhammer", MAKE_NUMBER(40000))
-    environment.declareVariable("true", MAKE_BOOL(true))
-    environment.declareVariable("false", MAKE_BOOL(false))
-    environment.declareVariable("null", MAKE_NULL())
+    // environment.declareVariable("x", MAKE_NUMBER(420))
+    // environment.declareVariable("y", MAKE_NUMBER(69))
+    // environment.declareVariable("warhammer", MAKE_NUMBER(40000))
+    // environment.declareVariable("true", MAKE_BOOL(true))
+    // environment.declareVariable("false", MAKE_BOOL(false))
+    // environment.declareVariable("null", MAKE_NULL())
 
     // Initialize repl
     console.log(`\nRepl of Rx v0.1`);
@@ -43,12 +43,12 @@ run()
 function run() {
     const parser = new Parser()
     const environment = new Environment()
-    environment.declareVariable("x", MAKE_NUMBER(420))
-    environment.declareVariable("y", MAKE_NUMBER(69))
-    environment.declareVariable("warhammer", MAKE_NUMBER(40000))
-    environment.declareVariable("true", MAKE_BOOL(true))
-    environment.declareVariable("false", MAKE_BOOL(false))
-    environment.declareVariable("null", MAKE_NULL())
+    // environment.declareVariable("x", MAKE_NUMBER(420))
+    // environment.declareVariable("y", MAKE_NUMBER(69))
+    // environment.declareVariable("warhammer", MAKE_NUMBER(40000))
+    // environment.declareVariable("true", MAKE_BOOL(true))
+    // environment.declareVariable("false", MAKE_BOOL(false))
+    // environment.declareVariable("null", MAKE_NULL())
 
 
     let input = prompt("> ")
