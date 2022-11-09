@@ -9,6 +9,4 @@ cval obj = {
     },
 };
 
-print.line(50 / 2 + x)
-val f = obj.complex.bar;
-foo = obj.foo(bar(x, y)) + 5
+foo = obj.foo() + 5;

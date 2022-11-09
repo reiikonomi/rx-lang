@@ -1,10 +1,20 @@
-import { RuntimeValue } from "./values";
-
+import { MAKE_BOOL, MAKE_NULL, MAKE_NUMBER, RuntimeValue } from "./values";
+export function setupScope() {
+    const environment = new Environment()
+    environment.declareVariable("x", MAKE_NUMBER(420), true)
+    environment.declareVariable("y", MAKE_NUMBER(69), true)
+    environment.declareVariable("warhammer", MAKE_NUMBER(40000), true)
+    environment.declareVariable("true", MAKE_BOOL(true), true)
+    environment.declareVariable("false", MAKE_BOOL(false), true)
+    environment.declareVariable("null", MAKE_NULL(), true)
+    return environment;
+}
 export default class Environment {
     private parent?: Environment;
     private variables: Map<string, RuntimeValue>;
     private constants: Set<string>;
     constructor(parentEnv?: Environment) {
+        const global = parentEnv ? true : false;
         this.parent = parentEnv;
         this.variables = new Map();
         this.constants = new Set()

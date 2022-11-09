@@ -1,7 +1,9 @@
-import { MAKE_NULL, NumberValue, RuntimeValue } from '../values';
+import { MAKE_NULL, NumberValue, ObjectValue, RuntimeValue } from '../values';
 import {
+    AssignmentExpr,
     BinaryExpr,
     Identifier,
+    ObjectLiteral,
 } from '../../frontend/ast';
 import { evaluate } from '../interpreter';
 import Environment from "../environment";
@@ -70,4 +72,35 @@ export function evaluate_identifier(
 ): RuntimeValue {
     const value = environment.lookupVariable(identifier.symbol);
     return value
+}
+
+
+/**
+ * 
+ * @param node 
+ * @param environment 
+ * @returns 
+ */
+export function evaluate_assignment_expression(node: AssignmentExpr, environment: Environment): RuntimeValue {
+    if (node.assigne.kind !== "Identifier") {
+        throw new Error(`Invalid lhs inside assignment ${JSON.stringify(node.assigne)}`)
+    }
+    const varname = (node.assigne as Identifier).symbol
+    return environment.assignVariable(varname, evaluate(node.value, environment))
+
+}
+
+export function evaluate_object_expression(
+    obj: ObjectLiteral,
+    environment: Environment
+): RuntimeValue {
+    const object = { type: "object", properties: new Map() } as ObjectValue;
+    for (const { key, value } of obj.properties) {
+        // console.log(key, value)
+        // handles valid key: pair
+        // { foo: foo} == { foo } if foo is defined beforehand
+        const runtimeVal = (value == undefined) ? environment.lookupVariable(key) : evaluate(value, environment);
+        object.properties.set(key, runtimeVal);
+    }
+    return object;
 }

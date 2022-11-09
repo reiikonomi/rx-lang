@@ -5,9 +5,14 @@
 export type NodeType =
     //Statements
     | "Program"
-
-    //Expressions
     | "VarDeclaration"
+    //Expressions
+    | "AssignmentExpr"
+    | "MemberExpression"
+    | "CallExpression"
+    // Liteals
+    | "Property"
+    | "ObjectLiteral"
     | "NumericLiteral"
     | "Identifier"
     | "BinaryExpr"
@@ -27,6 +32,13 @@ export interface Statement {
 export interface Program extends Statement {
     kind: "Program",
     body: Statement[]
+}
+
+
+export interface AssignmentExpr extends Expression {
+    kind: "AssignmentExpr",
+    assigne: Expression,
+    value: Expression
 }
 
 
@@ -53,6 +65,18 @@ export interface BinaryExpr extends Expression {
     right: Expression,
     operator: string
 }
+export interface CallExpression extends Expression {
+    kind: "CallExpression";
+    args: Expression[];
+    caller: Expression;
+}
+
+export interface MemberExpression extends Expression {
+    kind: "MemberExpression";
+    object: Expression;
+    property: Expression;
+    computed: boolean;
+}
 
 // LITERAL / PRIMARY EXPRESSION TYPES
 /**
@@ -69,4 +93,21 @@ export interface Identifier extends Expression {
 export interface NumericLiteral extends Expression {
     kind: "NumericLiteral",
     value: number
+}
+
+/**
+ * 
+ */
+export interface Property extends Expression {
+    kind: "Property",
+    key: string,
+    value?: Expression,
+}
+
+/**
+ * 
+ */
+export interface ObjectLiteral extends Expression {
+    kind: "ObjectLiteral",
+    properties: Property[]
 }
